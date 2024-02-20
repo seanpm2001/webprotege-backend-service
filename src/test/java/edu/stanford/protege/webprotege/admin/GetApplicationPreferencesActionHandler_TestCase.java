@@ -5,30 +5,31 @@ import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
+import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
+import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
-import edu.stanford.protege.webprotege.app.ApplicationSettings;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
-import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
