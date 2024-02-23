@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.perspective;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
