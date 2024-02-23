@@ -2,9 +2,9 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetProjectDetailsActionHandler_TestCase {

@@ -1,9 +1,12 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeIpcApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -64,7 +67,7 @@ public class ProjectCache_Test {
                                                        "A project",
                                                        "en",
                                                        "A project description"),
-                                                new ExecutionContext(UserId.valueOf("John Smith")));
+                                                new ExecutionContext(UserId.valueOf("John Smith"), ""));
         assertThat(projectCache.isActive(projectId), is(true));
     }
 

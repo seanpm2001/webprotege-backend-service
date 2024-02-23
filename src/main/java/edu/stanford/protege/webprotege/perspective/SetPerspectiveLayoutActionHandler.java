@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
