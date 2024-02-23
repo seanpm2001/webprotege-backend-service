@@ -4,6 +4,8 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 28/02/16
  */
 public class SetPerspectiveLayoutActionHandler extends AbstractProjectActionHandler<SetPerspectiveLayoutAction, SetPerspectiveLayoutResult> {
+
+    private final static Logger logger = LoggerFactory.getLogger(SetPerspectiveLayoutActionHandler.class);
 
     private final PerspectivesManager perspectivesManager;
 
@@ -45,6 +49,7 @@ public class SetPerspectiveLayoutActionHandler extends AbstractProjectActionHand
         var projectId = action.projectId();
         var userId = action.userId();
         var layout = action.layout();
+        logger.info("ALEX set perspective projectId {} userId {} layout {}", projectId, userId, layout);
         if(!userId.isGuest()) {
             perspectivesManager.savePerspectiveLayout(projectId, userId, layout);
         }

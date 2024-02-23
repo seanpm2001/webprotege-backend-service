@@ -114,10 +114,13 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public boolean hasPermission(@Nonnull Subject subject, @Nonnull Resource resource, @Nonnull ActionId actionId) {
         try {
-            return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+            logger.info("ALEX verific permisiunea subject {} , resource {} , action Id {}" , subject, resource, actionId);
+            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
                                                           new ExecutionContext())
-                    .get()
-                    .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
+                    .get();
+            logger.info("ALEX am primit raspuns " + response + " "  + response.authorizationStatus());
+            return response.authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
+
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Error when getting authorization status", e);
             return false;

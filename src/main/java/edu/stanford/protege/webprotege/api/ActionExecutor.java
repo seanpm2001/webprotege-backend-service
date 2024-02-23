@@ -38,10 +38,12 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public   <A extends Request<R>,  R extends Response> R execute(A action, ExecutionContext executionContext) {
         try {
-            RequestContext requestContext = new RequestContext(executionContext.userId(), new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
-            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+            edu.stanford.protege.webprotege.dispatch.ExecutionContext context = new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt());
+            RequestContext requestContext = new RequestContext(executionContext.userId(), context);
+            logger.info("ALEX execute din Action executor cu executor {} si context  {}",this.executor.getClass(), requestContext);
+            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, context);
             return (R) resultContainer.getResult();
-        } catch (ActionExecutionException e) {
+        } catch (Exception e) {
             logger.info("Action execution exception while executing request: {}", e.getMessage(), e);
             throw new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
