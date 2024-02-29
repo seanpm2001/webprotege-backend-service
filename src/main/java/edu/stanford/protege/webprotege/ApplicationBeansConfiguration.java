@@ -56,6 +56,7 @@ import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -556,4 +557,10 @@ public class ApplicationBeansConfiguration {
     ProjectImporter projectImporter(CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> p1) {
         return new ProjectImporter(p1);
     }
+
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange("webprotege-gwt-api-gateway");
+    }
+
 }
