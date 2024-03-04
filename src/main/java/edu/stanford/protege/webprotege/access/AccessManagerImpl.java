@@ -59,7 +59,7 @@ public class AccessManagerImpl implements AccessManager {
     public Collection<RoleId> getAssignedRoles(@Nonnull Subject subject, @Nonnull Resource resource) {
 
         try {
-            return getAssignedRolesExecutor.execute(new GetAssignedRolesRequest(subject,
+            return getAssignedRolesExecutor.executeRabbit(new GetAssignedRolesRequest(subject,
                                                                                 resource),
                                                     new ExecutionContext())
                     .get()
@@ -75,7 +75,7 @@ public class AccessManagerImpl implements AccessManager {
                                  @Nonnull Resource resource,
                                  @Nonnull Collection<RoleId> roleIds) {
         try {
-            var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
+            var response = setAssignedRolesExecutor.executeRabbit(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
                                                             new ExecutionContext());
             response.get();
         } catch (ExecutionException | InterruptedException e) {
@@ -87,7 +87,7 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Collection<RoleId> getRoleClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
         try {
-            return getRolesRequestExecutor.execute(new GetRolesRequest(subject, resource),
+            return getRolesRequestExecutor.executeRabbit(new GetRolesRequest(subject, resource),
                                                    new ExecutionContext())
                     .get()
                     .roles();
@@ -101,7 +101,7 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource, ExecutionContext executionContext) {
         try {
-            return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject),
+            return getAuthorizedActionsExecutor.executeRabbit(new GetAuthorizedActionsRequest(resource, subject),
                                                         executionContext)
                     .get()
                     .actionIds();
@@ -115,7 +115,7 @@ public class AccessManagerImpl implements AccessManager {
     public boolean hasPermission(@Nonnull Subject subject, @Nonnull Resource resource, @Nonnull ActionId actionId) {
         try {
             logger.info("ALEX verific permisiunea subject {} , resource {} , action Id {}" , subject, resource, actionId);
-            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.executeRabbit(new GetAuthorizationStatusRequest(resource, subject, actionId),
                                                           new ExecutionContext())
                     .get();
             logger.info("ALEX am primit raspuns " + response + " "  + response.authorizationStatus());
@@ -130,7 +130,7 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public boolean hasPermission(@Nonnull Subject subject, @Nonnull ApplicationResource resource, @Nonnull ActionId actionId, ExecutionContext executionContext) {
         try {
-            return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+            return getAuthorizationStatusExecutor.executeRabbit(new GetAuthorizationStatusRequest(resource, subject, actionId),
                             executionContext)
                     .get()
                     .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
@@ -151,7 +151,7 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInAction action) {
         try {
-            return getAuthorizedSubjectsExecutor.execute(new GetAuthorizedSubjectsRequest(resource,
+            return getAuthorizedSubjectsExecutor.executeRabbit(new GetAuthorizedSubjectsRequest(resource,
                                                                                           action.getActionId()),
                                                          new ExecutionContext())
                     .get()
@@ -170,7 +170,7 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId, ExecutionContext executionContext) {
         try {
-            return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId),
+            return getAuthorizedResourcesExecutor.executeRabbit(new GetAuthorizedResourcesRequest(subject, actionId),
                             executionContext)
                     .get()
                     .resources();

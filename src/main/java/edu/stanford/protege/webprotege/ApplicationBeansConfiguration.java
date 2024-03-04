@@ -60,6 +60,7 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -319,8 +320,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectPermissionsManager getProjectPermissionsManager(AccessManager accessManager,
-                                                           ProjectDetailsRepository projectDetailsRepository) {
+    ProjectPermissionsManager getProjectPermissionsManager(@Lazy AccessManager accessManager,
+                                                           @Lazy ProjectDetailsRepository projectDetailsRepository) {
         return new ProjectPermissionsManagerImpl(accessManager,
                                                  projectDetailsRepository);
     }
@@ -557,10 +558,4 @@ public class ApplicationBeansConfiguration {
     ProjectImporter projectImporter(CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> p1) {
         return new ProjectImporter(p1);
     }
-
-    @Bean
-    public DirectExchange directExchange() {
-        return new DirectExchange("webprotege-gwt-api-gateway");
-    }
-
 }
